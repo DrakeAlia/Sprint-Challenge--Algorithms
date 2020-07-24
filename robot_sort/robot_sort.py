@@ -130,6 +130,19 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
+
+        # Robot has light as a boolean for us to determine if our list is sorted
+        # First thing is we will turn the light on
+        # Then we will set up a while loop to keep going while the light is on
+        # Inside the while loop, we first turn the light off
+        # Then we begin checking each item against it's neighbor, initially moving it to the right
+
+        # While we can move right
+        # To do the check we pick up an item, move right, and compare
+        # If the neighbor is larger, we move back and drop the item, and move forward again
+        # If, however, the neighbor is smaller, we swap items, move left, drop the item, and move forward
+  
+
         self.set_light_on()
 
         while self.light_is_on():
@@ -137,14 +150,15 @@ class SortingRobot:
 
             self.bubble_right()
 
-            # We need this check to see if we didn't bubble anything going right
-            # If so there is no poing trying to bubble items going left
+            # We check to see if we didn't bubble anything going right
             if not self.light_is_on():
+                 # If the light is off we break, as no items were swapped so the list is sorted
                 break
+            # Otherwise we turn the light back off
             self.set_light_off()
             # Move left in order to avoid repeat a comparison
             self.move_left() 
-
+            # While we can move left, we can do everything in the list above in reverse, going from right to left
             self.bubble_left()
 
 if __name__ == "__main__":
