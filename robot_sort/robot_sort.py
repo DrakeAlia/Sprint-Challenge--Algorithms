@@ -92,13 +92,60 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def bubble_right(self):
+        while self.can_move_right():
+             # Grab the item to compare
+            self.swap_item()
+            # Go to the next item up
+            self.move_right()
+            # 1 means we are holding a larger item
+            if self.compare_item() == 1: 
+                # Swap because they are out of order
+                self.swap_item() 
+                # Turn light on so we know we have made a swap
+                self.set_light_on()
+            self.move_left()
+            self.swap_item() 
+            self.move_right()
+
+     # same as the bubble right but instead reversed
+    def bubble_left(self): 
+        while self.can_move_left():
+            # Grab item to compare
+            self.swap_item()
+             # Go to the next item up
+            self.move_left()
+            # -1 means we are holding a smaller item
+            if self.compare_item() == -1:
+                # Swap because they are out of order
+                self.swap_item()
+                # Turn light on so we know we have made a swap
+                self.set_light_on()
+            self.move_right()
+            self.swap_item()
+            self.move_left()
+
     def sort(self):
         """
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        self.set_light_on()
 
+        while self.light_is_on():
+            self.set_light_off()
+
+            self.bubble_right()
+
+            # We need this check to see if we didn't bubble anything going right
+            # If so there is no poing trying to bubble items going left
+            if not self.light_is_on():
+                break
+            self.set_light_off()
+            # Move left in order to avoid repeat a comparison
+            self.move_left() 
+
+            self.bubble_left()
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
