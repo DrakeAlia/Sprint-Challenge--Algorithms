@@ -92,13 +92,74 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def bubble_right(self):
+        while self.can_move_right():
+             # Grab the item to compare
+            self.swap_item()
+            # Go to the next item up
+            self.move_right()
+            # 1 means we are holding a larger item
+            if self.compare_item() == 1: 
+                # Swap because they are out of order
+                self.swap_item() 
+                # Turn light on so we know we have made a swap
+                self.set_light_on()
+            self.move_left()
+            self.swap_item() 
+            self.move_right()
+
+     # same as the bubble right but instead reversed
+    def bubble_left(self): 
+        while self.can_move_left():
+            # Grab item to compare
+            self.swap_item()
+             # Go to the next item up
+            self.move_left()
+            # -1 means we are holding a smaller item
+            if self.compare_item() == -1:
+                # Swap because they are out of order
+                self.swap_item()
+                # Turn light on so we know we have made a swap
+                self.set_light_on()
+            self.move_right()
+            self.swap_item()
+            self.move_left()
+
     def sort(self):
         """
         Sort the robot's list.
         """
         # Fill this out
-        pass
 
+        # Robot has light as a boolean for us to determine if our list is sorted
+        # First thing is we will turn the light on
+        # Then we will set up a while loop to keep going while the light is on
+        # Inside the while loop, we first turn the light off
+        # Then we begin checking each item against it's neighbor, initially moving it to the right
+
+        # While we can move right
+        # To do the check we pick up an item, move right, and compare
+        # If the neighbor is larger, we move back and drop the item, and move forward again
+        # If, however, the neighbor is smaller, we swap items, move left, drop the item, and move forward
+  
+
+        self.set_light_on()
+
+        while self.light_is_on():
+            self.set_light_off()
+
+            self.bubble_right()
+
+            # We check to see if we didn't bubble anything going right
+            if not self.light_is_on():
+                 # If the light is off we break, as no items were swapped so the list is sorted
+                break
+            # Otherwise we turn the light back off
+            self.set_light_off()
+            # Move left in order to avoid repeat a comparison
+            self.move_left() 
+            # While we can move left, we can do everything in the list above in reverse, going from right to left
+            self.bubble_left()
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
